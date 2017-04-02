@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+
+<html lang="zh-cn">
+
+<head>
+	<meta charset="utf-8">
+	<title>聊一聊Python的编码问题 - Python27 的博客</title>
+	<meta name="author" content="map[]">
+
+	
+	
+	<meta name="description" content="">
+	
+
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+	<link rel="canonical" href="http://python27.github.io/post/talk-about-encoding-problems/">
+	<link href="http://python27.github.io//favicon.png" rel="shortcut icon">
+	<link href="http://python27.github.io//css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="http://python27.github.io//css/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+  
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	
+	
+</div>
+
+<nav id="main-nav"><ul class="main">
+    <li><a href="/">Blog</a></li>
+    <li><a href="http://about.me/shashankmehta">About</a></li>
+    <li><a href="/post/">Archives</a></li>
+</ul>
+
+<section class="aboutme">
+  <p>
+    Thoughts of Algorithms
+  </p>
+</section>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+	</div>
+</nav>
+</header>
+			</div>
+		</div>
+		<div class="mid-col">
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner">
+					<div itemscope itemtype="http://schema.org/Blog">
+					<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <h1 class="title" itemprop="name">聊一聊Python的编码问题</h1>
+	<div class="entry-content" itemprop="articleBody">
+
+<h2 id="聊一聊python的编码问题">聊一聊Python的编码问题</h2>
+
+<p>编码方案    说明  好
+GB2312  1980年，6763个汉字   BAC3
+GBK 1995年，21003个汉字  BAC3
+GB18030 2000年，27533个汉字  BAC3
+Unicode     0000597D
+UTF-8       E5A5BD
+UTF-16      FEFF597D
+UTF-32      0000FEFF0000597D
+抽象字符表（Abstract character Repertoire, ACR）：所有待编码字符的集合。例如：haha_acr = { &lsquo;a&rsquo;, &lsquo;吼&rsquo;, &lsquo;あ&rsquo;, &lsquo; α&rsquo;, &lsquo;Д&rsquo; }
+编码字符集CCS：为抽象字符集的每个字符assign一个码位（Code Point）。例如，haha_ccs = { &lsquo;a&rsquo; : 0x0, &lsquo;吼&rsquo;:0x1 , &lsquo;あ&rsquo;:0x2 , &lsquo; α&rsquo;:0x3 , &lsquo;Д&rsquo;:0x4  }。例如US-ASCII和UCS（Universal Character Set，统一字符集），GBK.
+统一字符集UCS，即通常称的“Unicode字符集”，Unicode9.0.0收录了128237个字符，包括Emoji表情。
+字符编码表CEF（Character Encoding Form）：将码位（Code Point）映射为码元序列（Code Unit Sequences）, 在Unicode中定义了三种不同的CEF，分别采用1字节，2字节，4字节码元。在Unicode中，指定了三种标准的字符编码表CEF，UTF-8, UTF-16, UTF-32，分别将Unicode标量映射为bit为8,16,32的马元序列。例如下图：</p>
+
+<p>字符编码方案CES（Character Encoding Schema）：= 字符编码表CEF + 字节序列化。
+解决：1. 大小端序问题：每个码元是高位字节在前还是低位字节在前？
+      2. 字节序标记问题：另一个程序如何知道文本是什么端序呢？BOM(Byte Order Mark)
+对于这两个问题的回答，在三种字符编码表CEF上：UTF-8, UTF-16, UTF-32，定义了7种字符编码方案
+   UTF-8
+   UTF-16LE
+   UTF-16BE
+   UTF-16
+   UTF-32LE
+   UTF-32BE
+   UTF-32</p>
+
+<p>Python读入的中文字符“好”，是“好”的UTF-8的字符序列
+即‘\xe5\xa5\xbd’
+S = ‘好’  //拿到字符序列
+S.decode(‘utf-8’)  //对字符序列进行utf-8解码，得到对应的unicode码</p>
+
+<pre><code>蛤
+</code></pre>
+
+<p>GB2312/GBK/GB18030  &mdash;-无编码
+Unicode 000086E4
+UTF8    E89BA4
+UTF16   FEFF86E4
+UTF32   0000FEFF000086E4</p>
+
+<p>Unicode 编码模型（Unicode Encoding Model）
+1. 哪些可用字符
+2. 这些字符对应的自然数（码位，Code Points）
+3. 这些自然数如何编码为固定尺寸的自然数（码元，Code Unit）
+4. 这些码元如何被编码为字节流
+抽象字符集（Abstract Character Repertoire，ACR）：所有待编码字符的集合。
+编码字符集（Coded Character Set, CCS）：将抽象字符映射为自然数（码位，Code Point）的函数。
+字符编码表（Character Encoding Form, CEF），也称为存储格式化（Storage Format）：将码位（Code Point）映射为码元（Code Unit），以便于计算机存储。例如：16位计算机系统只能够直接表示0~65535的码元，但是对于更大的码元（65536~140万）可以通过多个16bit的单元表示，这种对应就是CEF定义的。
+   US-ASCII的code unit是7bits
+   UTF-8，EBCDIC和GB18030的code unit是8bits
+   UTF-16的code unit是16bits
+   UTF-32的code unit是32bits
+UTF8： 将code point映射为1,2,3,4个码元
+UTF16：将code point映射为1个码元对于U+10000；映射为2个码元对于&gt;U+10000
+UTF-32: 将code point直接映射为1个码元
+GB18030：将code point映射为1,2,4个码元</p>
+
+<p>UTF-16编码示例</p>
+
+<p>字符编码方案（Character Encoding Scheme, CES），也称序列格式化（Serialization Format）：将码元映射为字节序列以便于字节序列存储的文件系统或者字节序列的网络传输。简单的CES包括UTF-8，UTF-16BE，UTF-16LE，UTF-32BE，UTF-32LE</p>
+
+<p><code>Git push origin master</code></p>
+</div></article>
+					
+						<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	
+	</div>
+	
+</div>
+
+					
+					
+					
+
+
+				    </div>
+				</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2017
+
+    Python27 的博客
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>
+<script src="http://python27.github.io//js/slash.js"></script>
+<script src="http://python27.github.io//js/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script></footer>
+		</div>
+	</div>
+	
+</body>
+</html>

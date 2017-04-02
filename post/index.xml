@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Python27 的博客 on Python27 的博客 </title>
+      <title>Posts on Python27 的博客 </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>http://python27.github.io/index.xml</link>
+    <link>http://python27.github.io/post/index.xml</link>
     <language>zh-cn</language>
     
     
-    <updated>Sun, 02 Apr 2017 17:12:37 CST</updated>
+    <updated>Sun, 02 Apr 2017 16:11:19 CST</updated>
     
     <item>
       <title>聊一聊Python的编码问题</title>

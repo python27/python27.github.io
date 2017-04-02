@@ -83,6 +83,23 @@
 					
 					<div itemscope itemtype="http://schema.org/Blog">
 					
+				        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="meta">
+		<div class="date"><time datetime='Sun, Apr 2, 2017' data-updated="true" itemprop="datePublished">Sun, Apr 2, 2017</time>
+</div>
+		<div class="tags">
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="http://python27.github.io/post/talk-about-encoding-problems/" itemprop="url">聊一聊Python的编码问题</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		聊一聊Python的编码问题 编码方案 说明 好 GB2312 1980年，6763个汉字 BAC3 GBK 1995年，21003个汉字 BAC3 GB18030 2000年，27533个汉字 BAC3 Unicode 0000597D UTF-8 E5A5BD UTF-16 FEFF597D UTF-32 0000FEFF0000597D 抽象字符表（Abstract character Repertoire, ACR）：所有待编码字符的集合。例如：haha_acr = { &lsquo;a&rsquo;, &lsquo;吼&rsquo;, &lsquo;あ&rsquo;, &lsquo; α&rsquo;, &lsquo;Д&rsquo; } 编码字符集CCS：为抽象字符集的每个字符assign一个码位（Code Point）。例如，haha_ccs = { &lsquo;a&rsquo; : 0x0, &lsquo;吼&rsquo;:0x1 , &lsquo;あ&rsquo;:0x2 , &lsquo; α&rsquo;:0x3 , &lsquo;Д&rsquo;:0x4 }。例如US-ASCII和UCS（Universal Character Set，统一字符集），GBK. 统一字符集UCS，即通常称的“Unicode字符集”，Unicode9.0.0收录了128237个字符，包括Emoji表情。 字符编码表CEF（Character Encoding Form）：将码位（Code Point）映射为码元序列（Code Unit Sequences）, 在Unicode中定义了三种不同的CEF，分别采用1字节，2字节，4字节码元。在Unicode中，指定了三种标准的字符编码表CEF，UTF-8, UTF-16, UTF-32，分别将Unicode标量映射为bit为8,16,32的马元序列。例如下图：
+字符编码方案CES（Character Encoding Schema）：= 字符编码表CEF + 字节序列化。 解决：1. 大小端序问题：每个码元是高位字节在前还是低位字节在前？ 2.
+		<a href="http://python27.github.io/post/talk-about-encoding-problems/" class="more-link">Read on →</a>
+	</div>
+</article>
+
+				    
 				    </div>
 				    <nav id="pagenavi">
 					    

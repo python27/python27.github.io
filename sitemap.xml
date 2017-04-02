@@ -2,7 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://python27.github.io/about/about-me/</loc>
+    <lastmod>2017-04-02T17:12:37+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://python27.github.io/post/talk-about-encoding-problems/</loc>
+    <lastmod>2017-04-02T16:11:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://python27.github.io/about/</loc>
+    <lastmod>2017-04-02T17:12:37+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://python27.github.io/post/</loc>
+    <lastmod>2017-04-02T16:11:19+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://python27.github.io/</loc>
+    <lastmod>2017-04-02T17:12:37+08:00</lastmod>
     <priority>0</priority>
   </url>
   
