@@ -1,58 +1,187 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Python27 的博客 on Python27 的博客 </title>
-      <generator uri="https://gohugo.io">Hugo</generator>
-    <link>http://python27.github.io/index.xml</link>
-    <language>zh-cn</language>
+    <title>Python27 的博客</title>
+    <link>https://www.example.com/index.xml</link>
+    <description>Recent content on Python27 的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2017. All rights reserved.</copyright>
+    <lastBuildDate>Fri, 14 Apr 2017 16:21:44 +0800</lastBuildDate>
+    <atom:link href="https://www.example.com/index.xml" rel="self" type="application/rss+xml" />
     
+    <item>
+      <title>中文分词技术</title>
+      <link>https://www.example.com/post/Chinese-word-segment/</link>
+      <pubDate>Fri, 14 Apr 2017 16:21:44 +0800</pubDate>
+      
+      <guid>https://www.example.com/post/Chinese-word-segment/</guid>
+      <description>
+
+&lt;h1 id=&#34;1-中文分词介绍&#34;&gt;1. 中文分词介绍&lt;/h1&gt;
+
+&lt;p&gt;不像英文句子中单词与单词之间以空格分隔，中文语句的词与词之间没有明显的分隔符号。然而词语又是中文语句分析和理解的最基本单元，因此分词在中文自然语言处理中首当其冲，分词的好坏直接关系到后续的理解和分析。中文分词问题可以描述为，将由连续汉字组成的句子，添加合适的词语边界使得其反应句子的本意。例如：将“南京市长江大桥”添加词语边界“/”得到“南京/市/长江大桥”。更一般地，假设句子S=C1C2C3…Cn，其中C1, C2, …Cn表示单个汉字，分词算法需要将其切分为C1C2/C3C4C5/…/Cn其中C1C2和C3C4C5分别为一个词语。中文分词存在的主要困难有 [1]：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;未登录词：词典不可能覆盖所有的词，没有被词典收录的词就称为&lt;strong&gt;未登录词&lt;/strong&gt;或者&lt;strong&gt;新词&lt;/strong&gt;。其主要包括专有名词（人名、地名、机构名等）、重叠词（例如：“高高兴兴”）、派生词（例如：“一次性/用品”）等。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;分词歧义：例如“乒乓球拍卖完了”可以切分为“乒乓/球拍/卖完了”，也可以切分为“乒乓球/拍卖/完了”。学术上定义，如果汉字串AJB满足AJ和JB同时为词，则称AJB为&lt;strong&gt;交集型切分歧义&lt;/strong&gt;，其中J被称为交集串。除此之外，对于词语“起身”，在语境“他站/起/身/来”应该切分开；而在语境“他/明天/起身/去/北京”则不应该被切分开。学术上定义：如果汉字串AB满足A，B，AB同时为词，则称AB为&lt;strong&gt;组合型切分歧义&lt;/strong&gt;。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;2-基于匹配的分词算法&#34;&gt;2. 基于匹配的分词算法&lt;/h1&gt;
+
+&lt;p&gt;基于匹配的分词算法，也被称为基于词典的分词算法，或者简单地称作是“查词典”。顾名思义，其基本的想法就是不断找出句子中的字符串，然后去字典查找该字符串是否在字典内：如果在字典内则匹配成功，切出该词；否则，减小字符串长度，继续查找，直到是单个汉字为止。&lt;/p&gt;
+
+&lt;p&gt;根据对句子扫描方向的不同，基于匹配的算法可以分为前向匹配算法、后向匹配算法和双向匹配算法三种，下面分别进行介绍。&lt;/p&gt;
+
+&lt;h2 id=&#34;2-1-前向最大匹配算法&#34;&gt;2.1 前向最大匹配算法&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;前向最大匹配算法（Forward Maximum Match, FMM）&lt;/strong&gt;的基本思想是，从左至右扫描语句中的子串，如果子串在字典中，则匹配成功，切出该词；否则减少子串的长度，继续查找，直到子串是单个汉字为止（单个汉字被认为总是在字典中）。该算法的具体步骤如下：
+1.  设字典中最长词的长度为MAX_L；当前匹配长度L = MAX_L；当前带切分语句等于整个语句，即S=Sentence；当前切分结果的集合Res = {}；
+2.  取待切分语句S=C1C2C3…CL…Cn的前L个字符，在字典中查找C1C2C3…CL是否为合法词语，如果找到，则匹配成功，转入4；
+3.  如果字典中找不到词语C1C2C3…CL，则匹配失败；将匹配串长度减去1，即L = L – 1，转入2继续匹配；重复2-3直到匹配到为止；
+4.  将匹配串C1C2C3…CL放入结果集Res中，即Res = Res + C1C2C3…CL；更新带切分句子S=C{L+1}C{L+2}…Cn；如果带切分句子S为空，则返回切分结果Res，算法结束；否则转入2。&lt;/p&gt;
+
+&lt;p&gt;根据上述算法描述，其Python实现为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def ForwardMaximumMatch(sentence, word_dict, max_word_length):
+&amp;quot;&amp;quot;&amp;quot; 中文分词的最大前向匹配算法
+&amp;quot;&amp;quot;&amp;quot;
+s = sentence
+segment_result = []
+
+while s:
+    # 当前句子非空，按照最大长度切出一个词
+    match_len = max_word_length
+    match_len = min(match_len, len(s))
+
+    while True:
+        # 按照当前长度切出一个词
+        word = s[0:match_len]
+        # 如果当前切出的词在字典中，注意：单个汉字被认为总是在字典中
+        # 则切走当前词，并更新s，进行下一轮的切分
+        if len(word) == 1 or word in word_dict:
+            word = s[0:match_len]
+            segment_result.append(word)
+            s = s[match_len:]
+            break
+        # 否则，如果当前切出的词不在字典中，则减小切分长度，重新尝试切分
+        else:
+            match_len = match_len - 1
+
+return segment_result
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了测试算法的效果，笔者以&lt;a href=&#34;http://www.sogou.com/labs/resource/w.php&#34;&gt;搜狗实验室的互联网词库（SogouW）&lt;/a&gt;作为词典 ，并设最大词长为6，对朱自清的《背影》进行了中文分词，其结果如下：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;我与/父亲/不/相见/已/二年/余/了/，/我/最不/能/忘记/的是/他的背影/。/那年/冬天/，/祖母/死了/，/父亲/的/差使/也/交/卸/了/，/正是/祸不单行/的/日子/，/我/从/北京/到/徐州/，/打算/跟着/父亲/奔丧/回家/。/到/徐州/见着/父亲/，/看见/满/院/狼藉/的/东西/，/又/想起/祖母/，/不禁/簌簌/地/流下/眼泪/。/父亲/说/，/“/事已/如此/，/不必/难过/，/好在/天/无/绝/人/之路/！/”
+回家/变卖/典/质/，/父亲/还了/亏空/；/又/借钱/办了/丧事/。/这些日子/，/家中/光景/很/是/惨淡/，/一半/为了/丧事/，/一半/为了/父亲/赋闲/。/丧事/完毕/，/父亲/要到/南京/谋事/，/我也要/回/北京/念书/，/我们/便/同行/。
+到/南京/时/，/有/朋友/约/去/游逛/，/勾留/了/一日/；/第二日/上午/便/须/渡江/到/浦/口/，/下午/上车/北去/。/父亲/因为/事/忙/，/本已/说/定/不送/我/，/叫/旅馆里/一个/熟识/的/茶房/陪我/同去/。/他再/三/嘱咐/茶房/，/甚/是/仔细/。/但他/终于/不放心/，/怕/茶房/不妥/帖/；/颇/踌躇/了/一会/。/其实/我那/年/已/二十岁/，/北京/已/来往/过/两三次/，/是/没有/甚么/要紧/的/了/。/他/踌躇/了/一会/，/终于/决定/还是/自己/送我/去/。/我/两三/回/劝他/不必/去/；/他只/说/，/“/不要紧/，/他们/去/不好/！/”
+我们/过了/江/，/进了/车站/。/我买/票/，/他/忙着/照看/行李/。/行李/太多了/，/得/向/脚夫/行/些/小费/，/才可/过去/。/他便/又/忙着/和他/们/讲价钱/。/我那/时/真是/聪明/过分/，/总/觉/他说/话/不大/漂亮/，/非/自己/插嘴/不可/。/但他/终于/讲/定了/价钱/；/就送/我上/车/。/他给/我/拣/定了/靠/车门/的/一张/椅子/；/我将/他给/我做/的/紫/毛/大衣/铺好/坐位/。/他/嘱/我/路上/小心/，/夜里/警醒/些/，/不要/受凉/。/又/嘱托/茶房/好好/照应/我/。/我心里/暗笑/他的/迂/；/他们/只认/得/钱/，/托/他们/直/是/白/托/！/而且/我这/样/大年/纪/的人/，/难道/还不能/料理/自己/么/？/唉/，/我现在/想想/，/那时/真是太/聪明/了/！
+我说道/，/“/爸爸/，/你走/吧/。/”/他/望/车外/看了看/，/说/，/“/我买/几个/橘子/去/。/你就/在此/地/，/不要走/动/。/”/我看/那边/月台/的/栅栏/外/有几个/卖东西/的/等着/顾客/。/走到/那边/月台/，/须/穿过/铁道/，/须/跳下去/又/爬上去/。/父亲/是一个/胖子/，/走过去/自然/要/费事/些/。/我本/来/要去/的/，/他不/肯/，/只好/让他/去/。/我看见/他戴着/黑/布/小/帽/，/穿着/黑/布/大马/褂/，/深/青/布/棉/袍/，/蹒跚/地走/到/铁道/边/，/慢慢/探身/下去/，/尚不/大/难/。/可是他/穿过/铁道/，/要/爬上/那边/月台/，/就不/容易/了/。/他用/两手/攀/着/上面/，/两脚/再向/上/缩/；/他/肥胖/的/身子/向左/微/倾/，/显出/努力/的/样子/。/这时/我看见/他的背影/，/我的/泪/很快/地/流下/来了/。/我赶紧/拭/干了/泪/，/怕他/看见/，/也/怕/别人/看见/。/我再/向外/看时/，/他已/抱了/朱红/的/橘子/望/回/走了/。/过/铁道/时/，/他先/将/橘子/散/放在/地上/，/自己/慢慢/爬下/，/再/抱起/橘子/走/。/到/这边/时/，/我赶紧/去/搀/他/。/他和/我走/到/车上/，/将/橘子/一股脑儿/放在/我的/皮大衣/上/。/于是/扑扑/衣/上/的/泥土/，/心里/很/轻松/似/的/，/过/一会/说/，/“/我走了/；/到/那边/来信/！/”/我/望着他/走出去/。/他走/了/几步/，/回过/头/看见/我/，/说/，/“/进去/吧/，/里边/没人/。/”/等他/的/背影/混入/来来往往/的人/里/，/再找/不着/了/，/我便/进来/坐下/，/我的眼泪/又来了/。
+近几年来/，/父亲/和我/都是/东奔西走/，/家中/光景/是/一日/不如/一日/。/他/少年/出外/谋生/，/独力/支持/，/做/了/许多/大事/。/那知/老/境/却/如此/颓唐/！/他/触目伤怀/，/自然/情/不能自已/。/情/郁/于/中/，/自然/要/发/之于/外/；/家庭/琐屑/便往/往/触/他/之/怒/。/他/待我/渐渐/不同/往日/。/但/最近/两年/的/不见/，/他/终于/忘却/我的/不好/，/只是/惦记/着/我/，/惦记/着/我的/儿子/。/我/北/来/后/，/他写/了/一/信/给我/，/信中/说道/，/“/我/身体/平安/，/惟/膀子/疼痛/利害/，/举/箸/提笔/，/诸多/不便/，/大约/大/去/之/期/不远/矣/。/”/我读/到此/处/，/在/晶莹/的/泪光/中/，/又/看见/那/肥胖/的/，/青/布/棉/袍/，/黑/布/马褂/的/背影/。/唉/！/我不/知/何时/再/能与/他/相见/！&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;可以看到，总体来说，如果词典选择得好，FMM算法还是能比较好的实现切分效果的。然而也存在一些问题，首先对于未登录词不友好，例如“/第二日/上午/便/须/渡江/到/浦/口”，其中“浦口”应该是一个词，然而FMM算法并未识别出来。其次，对于交集型歧义不友好，例如：“/总/觉/他说/话/不大/漂亮/”，其中“他说话”可以切分为“他说/话”或者“他/说话”，这里应该是后者，然而由于FMM从左至右扫描，导致切分成前者。&lt;/p&gt;
+</description>
+    </item>
     
-    <updated>Sun, 02 Apr 2017 17:12:37 CST</updated>
+    <item>
+      <title>About Me</title>
+      <link>https://www.example.com/about/</link>
+      <pubDate>Sun, 02 Apr 2017 17:12:37 +0800</pubDate>
+      
+      <guid>https://www.example.com/about/</guid>
+      <description>
+
+&lt;h2 id=&#34;教育背景&#34;&gt;教育背景&lt;/h2&gt;
+
+&lt;p&gt;2012.09-2017.06 浙江大学 博士
+2008.09-2012.06 西安电子科技大学 学士&lt;/p&gt;
+
+&lt;h2 id=&#34;实习经历&#34;&gt;实习经历&lt;/h2&gt;
+
+&lt;h2 id=&#34;论文发表&#34;&gt;论文发表&lt;/h2&gt;
+
+&lt;h2 id=&#34;所获荣誉&#34;&gt;所获荣誉&lt;/h2&gt;
+</description>
+    </item>
     
     <item>
       <title>聊一聊Python的编码问题</title>
-      <link>http://python27.github.io/post/talk-about-encoding-problems/</link>
-      <pubDate>Sun, 02 Apr 2017 16:11:19 CST</pubDate>
+      <link>https://www.example.com/post/talk-about-encoding-problems/</link>
+      <pubDate>Sun, 02 Apr 2017 16:11:19 +0800</pubDate>
       
-      <guid>http://python27.github.io/post/talk-about-encoding-problems/</guid>
+      <guid>https://www.example.com/post/talk-about-encoding-problems/</guid>
       <description>
 
-&lt;h2 id=&#34;聊一聊python的编码问题&#34;&gt;聊一聊Python的编码问题&lt;/h2&gt;
+&lt;h2 id=&#34;unicode-编码模型-unicode-encoding-model&#34;&gt;Unicode 编码模型（Unicode Encoding Model）&lt;/h2&gt;
 
-&lt;p&gt;编码方案    说明  好
+&lt;ol&gt;
+&lt;li&gt;哪些可用字符&lt;/li&gt;
+&lt;li&gt;这些字符对应的自然数（码位，Code Points）&lt;/li&gt;
+&lt;li&gt;这些自然数如何编码为固定尺寸的自然数（码元，Code Unit）&lt;/li&gt;
+&lt;li&gt;这些码元如何被编码为字节流&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;抽象字符集（Abstract Character Repertoire，ACR）&lt;/strong&gt;：所有待编码字符的集合。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;编码字符集（Coded Character Set, CCS）&lt;/strong&gt;：将抽象字符映射为自然数（码位，Code Point）的函数。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;字符编码表（Character Encoding Form, CEF）&lt;/strong&gt;，也称为存储格式化（Storage Format）：将码位（Code Point）映射为码元（Code Unit），以便于计算机存储。例如：16位计算机系统只能够直接表示0~65535的码元，但是对于更大的码元（65536~140万）可以通过多个16bit的单元表示，这种对应就是CEF定义的。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;US-ASCII的code unit是7bits&lt;/li&gt;
+&lt;li&gt;UTF-8，EBCDIC和GB18030的code unit是8bits&lt;/li&gt;
+&lt;li&gt;UTF-16的code unit是16bits&lt;/li&gt;
+&lt;li&gt;UTF-32的code unit是32bits&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;UTF8： 将code point映射为1,2,3,4个码元
+UTF16：将code point映射为1个码元对于U+10000；映射为2个码元对于&amp;gt;U+10000
+UTF-32: 将code point直接映射为1个码元
+GB18030：将code point映射为1,2,4个码元&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;编码方案&lt;/em&gt;  &lt;strong&gt;说明&lt;/strong&gt;好
 GB2312  1980年，6763个汉字   BAC3
 GBK 1995年，21003个汉字  BAC3
 GB18030 2000年，27533个汉字  BAC3
 Unicode     0000597D
 UTF-8       E5A5BD
 UTF-16      FEFF597D
-UTF-32      0000FEFF0000597D
-抽象字符表（Abstract character Repertoire, ACR）：所有待编码字符的集合。例如：haha_acr = { &amp;lsquo;a&amp;rsquo;, &amp;lsquo;吼&amp;rsquo;, &amp;lsquo;あ&amp;rsquo;, &amp;lsquo; α&amp;rsquo;, &amp;lsquo;Д&amp;rsquo; }
-编码字符集CCS：为抽象字符集的每个字符assign一个码位（Code Point）。例如，haha_ccs = { &amp;lsquo;a&amp;rsquo; : 0x0, &amp;lsquo;吼&amp;rsquo;:0x1 , &amp;lsquo;あ&amp;rsquo;:0x2 , &amp;lsquo; α&amp;rsquo;:0x3 , &amp;lsquo;Д&amp;rsquo;:0x4  }。例如US-ASCII和UCS（Universal Character Set，统一字符集），GBK.
-统一字符集UCS，即通常称的“Unicode字符集”，Unicode9.0.0收录了128237个字符，包括Emoji表情。
-字符编码表CEF（Character Encoding Form）：将码位（Code Point）映射为码元序列（Code Unit Sequences）, 在Unicode中定义了三种不同的CEF，分别采用1字节，2字节，4字节码元。在Unicode中，指定了三种标准的字符编码表CEF，UTF-8, UTF-16, UTF-32，分别将Unicode标量映射为bit为8,16,32的马元序列。例如下图：&lt;/p&gt;
+UTF-32      0000FEFF0000597D&lt;/p&gt;
 
-&lt;p&gt;字符编码方案CES（Character Encoding Schema）：= 字符编码表CEF + 字节序列化。
-解决：1. 大小端序问题：每个码元是高位字节在前还是低位字节在前？
-      2. 字节序标记问题：另一个程序如何知道文本是什么端序呢？BOM(Byte Order Mark)
-对于这两个问题的回答，在三种字符编码表CEF上：UTF-8, UTF-16, UTF-32，定义了7种字符编码方案
-   UTF-8
-   UTF-16LE
-   UTF-16BE
-   UTF-16
-   UTF-32LE
-   UTF-32BE
-   UTF-32&lt;/p&gt;
+&lt;p&gt;*抽象字符表（Abstract character Repertoire, ACR）*：所有待编码字符的集合。例如：haha_acr = { &amp;lsquo;a&amp;rsquo;, &amp;lsquo;吼&amp;rsquo;, &amp;lsquo;あ&amp;rsquo;, &amp;lsquo; α&amp;rsquo;, &amp;lsquo;Д&amp;rsquo; }&lt;/p&gt;
+
+&lt;p&gt;*编码字符集CCS*：为抽象字符集的每个字符assign一个码位（Code Point）。例如，haha_ccs = { &amp;lsquo;a&amp;rsquo; : 0x0, &amp;lsquo;吼&amp;rsquo;:0x1 , &amp;lsquo;あ&amp;rsquo;:0x2 , &amp;lsquo; α&amp;rsquo;:0x3 , &amp;lsquo;Д&amp;rsquo;:0x4  }。例如US-ASCII和UCS（Universal Character Set，统一字符集），GBK.&lt;/p&gt;
+
+&lt;p&gt;*统一字符集UCS，即通常称的“Unicode字符集”*，Unicode9.0.0收录了128237个字符，包括Emoji表情。&lt;/p&gt;
+
+&lt;p&gt;*字符编码表CEF（Character Encoding Form）*：将码位（Code Point）映射为码元序列（Code Unit Sequences）, 在Unicode中定义了三种不同的CEF，分别采用1字节，2字节，4字节码元。在Unicode中，指定了三种标准的字符编码表CEF，UTF-8, UTF-16, UTF-32，分别将Unicode标量映射为bit为8,16,32的马元序列。例如下图：&lt;/p&gt;
+
+&lt;p&gt;*字符编码方案CES（Character Encoding Schema）*：= 字符编码表CEF + 字节序列化。解决：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;大小端序问题：每个码元是高位字节在前还是低位字节在前？&lt;/li&gt;
+&lt;li&gt;字节序标记问题：另一个程序如何知道文本是什么端序呢？BOM(Byte Order Mark)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;对于这两个问题的回答，在三种字符编码表CEF上：UTF-8, UTF-16, UTF-32，定义了7种字符编码方案
+ * UTF-8
+ * UTF-16LE
+ * UTF-16BE
+ * UTF-16
+ * UTF-32LE
+ * UTF-32BE
+ * UTF-32&lt;/p&gt;
 
 &lt;p&gt;Python读入的中文字符“好”，是“好”的UTF-8的字符序列
 即‘\xe5\xa5\xbd’
 S = ‘好’  //拿到字符序列
-S.decode(‘utf-8’)  //对字符序列进行utf-8解码，得到对应的unicode码&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;蛤
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;GB2312/GBK/GB18030  &amp;mdash;-无编码
+S.decode(‘utf-8’)  //对字符序列进行utf-8解码，得到对应的unicode码
+蛤
+GB2312/GBK/GB18030  &amp;mdash;-无编码
 Unicode 000086E4
 UTF8    E89BA4
 UTF16   FEFF86E4
@@ -77,9 +206,52 @@ GB18030：将code point映射为1,2,4个码元&lt;/p&gt;
 
 &lt;p&gt;UTF-16编码示例&lt;/p&gt;
 
-&lt;p&gt;字符编码方案（Character Encoding Scheme, CES），也称序列格式化（Serialization Format）：将码元映射为字节序列以便于字节序列存储的文件系统或者字节序列的网络传输。简单的CES包括UTF-8，UTF-16BE，UTF-16LE，UTF-32BE，UTF-32LE&lt;/p&gt;
+&lt;p&gt;字符编码方案（Character Encoding Scheme, CES），也称序列格式化（Serialization Format）：将码元映射为字节序列以便于字节序列存储的文件系统或者字节序列的网络传输。简单的CES包括UTF-8，UTF-16BE，UTF-16LE，UTF-32BE，UTF-32LE &lt;code&gt;Git push origin master&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;Git push origin master&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;print &#39;hello word&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;精英主义是一种精神疾病，是一种心理变态。得了这种病的人，有不同的轻重程度。程度轻的人，也许只是张口闭口的“名校”和“牛人”。而程度重的人，最后可能成为反人类的战争罪犯。希特勒就是一个严重的精英主义者，他认为自己是精英，“劣等民族”的人都应该死。&lt;/p&gt;
+
+&lt;p&gt;这些所谓的精英，在智力上，体力上，学识上，人格上，都没有什么值得称道的地方。他们被称为“精英”，往往是通过家族关系，或者舔人屁股，玩弄权术。还有些人，尽其所能包装自己，把自己跟名人或者富豪挂钩，写回忆录，请人给自己写传记，这样别人就以为他是天才，是杰出人物。而他们其实并没有什么特别，也许还不如一般人。&lt;/p&gt;
+
+&lt;p&gt;精英们最在行的事情，其实是拉关系，互相吹捧，唱高调，包装自己。他们在心理上是弱小的，他们必须依赖于名校或者大公司的牌子，依赖于校友的认可，依赖于那些身居高位的人的赞许和提拔。他们很多人不过是某些幕后黑手的木偶人而已。有句话说得好：宠为下，得知若惊，失之若惊。如果你需要身居高位的人的认可，那么你其实是一个卑贱的人。&lt;/p&gt;
+
+&lt;p&gt;精英主义者集结的地方，被中国人叫做“世界一流大学”：哈佛，耶鲁，Cornell…… 进入这些大学的人，一般都是通过关系或者金钱，却吹捧自己是因为才能出众而进入那些学校。等你亲自进去一看，发现里面的教授很少有真知灼见，上课照本宣科，学生忙着抄笔记，学得一知半解，作业互相抄袭，考试焦头烂额，蒙混过关。&lt;/p&gt;
+
+&lt;p&gt;这些教授倒是对宣传工作相当在行，屁大点研究，总要让纽约时报之类的搞一下政治宣传，然后在院系主页上贴个告示，看哪我们教授的研究被纽约时报报道了！这些人的实际水平，比起很多州立大学里潜心做研究的不知名学者，差不止一个档次。很多中国人都不知道，纽约时报，华盛顿邮报，CNN 之类，其实都是婊子媒体，出钱或者有关系就给你发文拍片。纽约时报的老板就是个毒贩子，黑帮老大。&lt;/p&gt;
+
+&lt;p&gt;实际上，“世界一流大学”这个名词，你只能在中国听到。在美国没有人使用这种词汇，甚至像（prestigious）这种词都很少用。如果你进入普通的州立大学，会发现没有人在乎哈佛，耶鲁，Cornell 这些“常春藤联盟”。如果你老是提这些名字，会招致人的反感。因为这些大学的人都知道精英学校是什么东西，根本不屑于提到他们。&lt;/p&gt;
+
+&lt;p&gt;精英大学不但以无能著称，它们比你现象的还要可怕许多。这些学校里面一般都存在一些“秘密组织”，比如 Cornell 的 Quill and Dagger。这些组织就是精英聚集的场所。为什么要是秘密的呢？因为他们会进行一些见不得人的犯罪活动，导致成员之间互相抓住把柄，从而形成共生死的团伙。甚至有些名校的整个学院，都被罪犯花重金包下来，成为培养他们接班人的摇篮。所以美国的名校，其实跟娼妓没什么两样，名气越是大的越是这样。&lt;/p&gt;
+
+&lt;p&gt;很多进入白宫的精英，就是从这种名校秘密组织出来的，比如臭名昭著的克林顿国家安全顾问 Sandy Berger，就是 Quill and Dagger 的成员。在 911 恐怖袭击发生之后，Sandy Berger 进入国家档案馆，偷走关于克林顿与 911 之间关系的资料原版，并且销毁。这种销毁证据的做法，说明克林顿跟 &lt;sup&gt;9&lt;/sup&gt;&amp;frasl;&lt;sub&gt;11&lt;/sub&gt; 肯定有扯不清的关系。&lt;/p&gt;
+
+&lt;p&gt;从这个现象，你也许可以理解为什么很多精英大学容易出现学生自杀的事件。比如上次新闻报道说，一周之内有三个学生从 Cornell 校内同一座桥上跳下去自杀，结果后来派了警察在桥上日夜巡逻。三个学生几乎在同一时间想不通，在同一地点寻短见，这也未免太巧了点吧。如果你研究过历史就会知道，美国很多所谓的自杀案件其实都是谋杀，只是用自杀来掩盖真相。所以这些学生到底是自杀还是谋杀，谁都说不清楚。想要把孩子送去精英大学读书的人，真的应该考虑一下他们的安全了。&lt;/p&gt;
+
+&lt;p&gt;在精英大学上过研究生的人，大可不必觉得我是在嘲笑你们。精英主义者心目中的所谓“校友”，一般只包括本科阶段的同僚。如果你跟我一样在“二流学校”本科毕业，进入精英学校读研究生或者博士生，他们不会把你当成校友。相反，他们会歧视你，觉得你是去那里打工的，甚至嘲笑你好像什么都不懂，怎么进来的。这是因为本科是塑造人格和价值观的主要阶段，如果你的本科生活是在其它学校度过的，那么你并不具有这种“精英品质”，就算你之后进去读完博士也不会改变这个观念。这就是为什么有些中国人在国内本科都快毕业了，却退学去美国精英大学再读一个本科，因为这些人很想要成为精英，进入“主流社会”。&lt;/p&gt;
+
+&lt;p&gt;然而现在我们已经看清楚了，美国的主流社会和精英们的本质，我们知道了他们在干些什么样的事情。所以如果你不是精英大学官方意义上的校友，反倒没有了这层嫌疑需要洗清。&lt;/p&gt;
+
+&lt;p&gt;美国精英们的“宣传部”，叫做好莱坞。好莱坞通过形象包装，形成偶像崇拜，好莱坞电影就是给人们洗脑的工具。好莱坞明星们给人们灌输错误的标准：审美标准，道德标准。说实话，好莱坞这么多女影星走红地毯，就找不出几个好看的。可是由于他们给人洗脑，以至于很多天生丽质的女生从小耳濡目染，居然觉得好莱坞那些丑女明星比自己美，去模仿她们的化妆和衣着样式，甚至想去做整形手术，这样可以变得更像她们。这些美丽的女孩因为明星崇拜，失去了对自己的尊重和自信，真是可惜。&lt;/p&gt;
+
+&lt;p&gt;说到道德，你可能已经听说了，好莱坞的明星们几乎每一个都吸毒，很多还进行更可怕的犯罪活动。有一种极其变态的犯罪活动，叫做恋童癖（pedophilia），或者直接一点，叫做性虐儿童（child sex abuse）。我们都听说 Michael Jackson 被指控强奸男童的事，后来又莫名其妙死了，这表现出团伙成员之间的内斗现象。有趣的是，好莱坞有很多的明星最后都说是自杀或者吸毒过量死亡。他们到底是自杀还是谋杀，也很值得怀疑。&lt;/p&gt;
+
+&lt;p&gt;恋童活动在好莱坞非常的普遍，它还经常跟邪教仪式（satanic ritual）结合在一起，这些人会在仪式上当场宰杀儿童用来“祭祀”。这种丧尽天良的可怕罪行，在很多其他国家是要判死刑的，美国政府却几乎完全不管，因为白宫的官员们在干同样的事情。这不是危言耸听，如果你仔细研究，就会发现这就是全世界的精英团伙里面正在进行的：美国白宫，英国王室，好莱坞，天主教会，世界一流大学……&lt;/p&gt;
+
+&lt;p&gt;美国这几年每年有超过 40 万儿童失踪，每年车祸死亡的人数才 3 万多。失踪儿童数量比车祸死亡人数大十倍以上，这是不正常的。这些失踪的儿童到哪里去了？另外，美国有些儿童领养中心和孤儿院，被查出在从事贩卖儿童性奴（child sex trafficking）的生意。这些人还在落后和受灾国家办孤儿院，说是人道主义援助，结果被当地警察发现他们带走的小孩都是有父母的…… 你不觉得毛骨悚然吗？&lt;/p&gt;
+
+&lt;p&gt;反正看到这一切的时候，我的世界观都被颠覆了。我真希望这只是一场还没醒来的噩梦，可是无数的证据和证人都说明这就是现实！&lt;/p&gt;
+
+&lt;p&gt;精英们一直以来都依靠媒体来掩盖自己罪恶的真相，给人洗脑，冠冕堂皇的让人崇拜。而这次的美国总统大选，导致了这些主流媒体的轰然倒塌：CNN，华盛顿邮报，纽约时报，时代周刊，BBC，…… 我们现在知道，这些媒体都是被庞大的恶势力网络控制的。&lt;/p&gt;
+
+&lt;p&gt;在互联网发达之后，精英们也利用网络媒体来对公众进行洗脑。他们的帮凶包括 Google，Facebook，Twitter，…… 这些社交媒体不但在政治上帮助这些精英搞宣传，而且帮助他们屏蔽对他们不利的真相，把这些真相都叫做“假新闻”。而事实是，CNN 之类的主流媒体才是假新闻。如果你仔细研究一下，会发现 Facebook 和华盛顿邮报的幕后支持者，其实是作恶多端的 CIA。&lt;/p&gt;
+
+&lt;p&gt;真正独立而自由的“另类媒体”，比如 InfoWars，Breitbart，Prison Planet，再加上异常强大的 WikiLeaks，通过多方面的证据，揭示了精英们的真相。是这些敢于说真话的人，用他们的生命和自由，换来了世界局势的转机，同时导致了精英主义走向灭亡。现在听说某人是“精英”，我都得先考虑一下他跟这些龌龊的事情有没有关系，上网搜索调查一下。&lt;/p&gt;
+
+&lt;p&gt;未来的世界属于每一个平凡的人，只是他们还在熟睡，旁边的吸血鬼们正在黑暗中选择他们的猎物…… 当真相的阳光照进来，当人们醒过来的时候，就是精英统治的时代结束的时候。如果你现在还以为有任何人高人一等，你的心里还存在某种偶像，你还以为世界上有天才存在，你还很在乎好莱坞明星，或者 Zuckerberg 之类小丑说的话或者做的事，你还在梦想有一天把孩子送到哈佛念书，进入“上流社会”，请仔细再看看这篇文章和相关的视频，你会意识到这些想法有多么的愚蠢。&lt;/p&gt;
+
+&lt;p&gt;你完全没有意识到自己的价值，你没有意识到身边的普通人的价值，你没有发现幸福就在身边。你只是生活在别人为你设计的梦里，追求那些他们让你追求的东西，最终却发现你出卖了灵魂。醒来的过程是痛苦的，但醒来后的未来是美好的。被精英们用欺骗手段收走的力量，就要回到人们的手里！&lt;/p&gt;
 </description>
     </item>
     

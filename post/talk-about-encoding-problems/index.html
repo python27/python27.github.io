@@ -1,125 +1,299 @@
-<!DOCTYPE HTML>
-
-<html lang="zh-cn">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>聊一聊Python的编码问题 - Python27 的博客</title>
-	<meta name="author" content="map[]">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.19" />
 
-	
-	
-	<meta name="description" content="">
-	
+  <title>聊一聊Python的编码问题 &middot; Python27 的博客</title>
 
-	
-	<meta name="HandheldFriendly" content="True">
-	<meta name="MobileOptimized" content="320">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    
-	<link rel="canonical" href="http://python27.github.io/post/talk-about-encoding-problems/">
-	<link href="http://python27.github.io//favicon.png" rel="shortcut icon">
-	<link href="http://python27.github.io//css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-	<link href="http://python27.github.io//css/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
-	
-	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://www.example.com/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://www.example.com/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://www.example.com/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://www.example.com/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://www.example.com/css/my.css">
+  
+  
+    <script src="https://www.example.com/js/my.js"></script>
   
 
 </head>
 
 
 <body>
-	<div class="container">
-		<div class="left-col">
-			<div class="intrude-less">
-			<header id="header" class="inner"><div class="profilepic">
-	
-	
-	
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://www.example.com/">Python27</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.example.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.example.com/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.example.com/contact/"><i class='fa fa-phone fa-fw'></i>Contact</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.example.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/2839959630" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/python27" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://stackoverflow.com/users/*" target="_blank"><i class="fa fa-stack-overflow fa-fw"></i>Stack Overflow</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
 </div>
 
-<nav id="main-nav"><ul class="main">
-    <li><a href="/">Blog</a></li>
-    <li><a href="http://about.me/shashankmehta">About</a></li>
-    <li><a href="/post/">Archives</a></li>
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2017. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>聊一聊Python的编码问题</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>02 Apr 2017, 16:11</time>
+  </div>
+
+  
+
+  
+
+  
+
+</div>
+
+  
+
+<h2 id="unicode-编码模型-unicode-encoding-model">Unicode 编码模型（Unicode Encoding Model）</h2>
+
+<ol>
+<li>哪些可用字符</li>
+<li>这些字符对应的自然数（码位，Code Points）</li>
+<li>这些自然数如何编码为固定尺寸的自然数（码元，Code Unit）</li>
+<li>这些码元如何被编码为字节流</li>
+</ol>
+
+<p><strong>抽象字符集（Abstract Character Repertoire，ACR）</strong>：所有待编码字符的集合。</p>
+
+<p><strong>编码字符集（Coded Character Set, CCS）</strong>：将抽象字符映射为自然数（码位，Code Point）的函数。</p>
+
+<p><strong>字符编码表（Character Encoding Form, CEF）</strong>，也称为存储格式化（Storage Format）：将码位（Code Point）映射为码元（Code Unit），以便于计算机存储。例如：16位计算机系统只能够直接表示0~65535的码元，但是对于更大的码元（65536~140万）可以通过多个16bit的单元表示，这种对应就是CEF定义的。</p>
+
+<ul>
+<li>US-ASCII的code unit是7bits</li>
+<li>UTF-8，EBCDIC和GB18030的code unit是8bits</li>
+<li>UTF-16的code unit是16bits</li>
+<li>UTF-32的code unit是32bits</li>
 </ul>
 
-<section class="aboutme">
-  <p>
-    Thoughts of Algorithms
-  </p>
-</section>
-</nav>
-<nav id="sub-nav">
-	<div class="social">
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-    	
-    	
-	</div>
-</nav>
-</header>
-			</div>
-		</div>
-		<div class="mid-col">
-			
-			<div class="mid-col-container">
-				<div id="content" class="inner">
-					<div itemscope itemtype="http://schema.org/Blog">
-					<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <h1 class="title" itemprop="name">聊一聊Python的编码问题</h1>
-	<div class="entry-content" itemprop="articleBody">
+<p>UTF8： 将code point映射为1,2,3,4个码元
+UTF16：将code point映射为1个码元对于U+10000；映射为2个码元对于&gt;U+10000
+UTF-32: 将code point直接映射为1个码元
+GB18030：将code point映射为1,2,4个码元</p>
 
-<h2 id="聊一聊python的编码问题">聊一聊Python的编码问题</h2>
-
-<p>编码方案    说明  好
+<p><em>编码方案</em>  <strong>说明</strong>好
 GB2312  1980年，6763个汉字   BAC3
 GBK 1995年，21003个汉字  BAC3
 GB18030 2000年，27533个汉字  BAC3
 Unicode     0000597D
 UTF-8       E5A5BD
 UTF-16      FEFF597D
-UTF-32      0000FEFF0000597D
-抽象字符表（Abstract character Repertoire, ACR）：所有待编码字符的集合。例如：haha_acr = { &lsquo;a&rsquo;, &lsquo;吼&rsquo;, &lsquo;あ&rsquo;, &lsquo; α&rsquo;, &lsquo;Д&rsquo; }
-编码字符集CCS：为抽象字符集的每个字符assign一个码位（Code Point）。例如，haha_ccs = { &lsquo;a&rsquo; : 0x0, &lsquo;吼&rsquo;:0x1 , &lsquo;あ&rsquo;:0x2 , &lsquo; α&rsquo;:0x3 , &lsquo;Д&rsquo;:0x4  }。例如US-ASCII和UCS（Universal Character Set，统一字符集），GBK.
-统一字符集UCS，即通常称的“Unicode字符集”，Unicode9.0.0收录了128237个字符，包括Emoji表情。
-字符编码表CEF（Character Encoding Form）：将码位（Code Point）映射为码元序列（Code Unit Sequences）, 在Unicode中定义了三种不同的CEF，分别采用1字节，2字节，4字节码元。在Unicode中，指定了三种标准的字符编码表CEF，UTF-8, UTF-16, UTF-32，分别将Unicode标量映射为bit为8,16,32的马元序列。例如下图：</p>
+UTF-32      0000FEFF0000597D</p>
 
-<p>字符编码方案CES（Character Encoding Schema）：= 字符编码表CEF + 字节序列化。
-解决：1. 大小端序问题：每个码元是高位字节在前还是低位字节在前？
-      2. 字节序标记问题：另一个程序如何知道文本是什么端序呢？BOM(Byte Order Mark)
-对于这两个问题的回答，在三种字符编码表CEF上：UTF-8, UTF-16, UTF-32，定义了7种字符编码方案
-   UTF-8
-   UTF-16LE
-   UTF-16BE
-   UTF-16
-   UTF-32LE
-   UTF-32BE
-   UTF-32</p>
+<p>*抽象字符表（Abstract character Repertoire, ACR）*：所有待编码字符的集合。例如：haha_acr = { &lsquo;a&rsquo;, &lsquo;吼&rsquo;, &lsquo;あ&rsquo;, &lsquo; α&rsquo;, &lsquo;Д&rsquo; }</p>
+
+<p>*编码字符集CCS*：为抽象字符集的每个字符assign一个码位（Code Point）。例如，haha_ccs = { &lsquo;a&rsquo; : 0x0, &lsquo;吼&rsquo;:0x1 , &lsquo;あ&rsquo;:0x2 , &lsquo; α&rsquo;:0x3 , &lsquo;Д&rsquo;:0x4  }。例如US-ASCII和UCS（Universal Character Set，统一字符集），GBK.</p>
+
+<p>*统一字符集UCS，即通常称的“Unicode字符集”*，Unicode9.0.0收录了128237个字符，包括Emoji表情。</p>
+
+<p>*字符编码表CEF（Character Encoding Form）*：将码位（Code Point）映射为码元序列（Code Unit Sequences）, 在Unicode中定义了三种不同的CEF，分别采用1字节，2字节，4字节码元。在Unicode中，指定了三种标准的字符编码表CEF，UTF-8, UTF-16, UTF-32，分别将Unicode标量映射为bit为8,16,32的马元序列。例如下图：</p>
+
+<p>*字符编码方案CES（Character Encoding Schema）*：= 字符编码表CEF + 字节序列化。解决：</p>
+
+<ol>
+<li>大小端序问题：每个码元是高位字节在前还是低位字节在前？</li>
+<li>字节序标记问题：另一个程序如何知道文本是什么端序呢？BOM(Byte Order Mark)</li>
+</ol>
+
+<p>对于这两个问题的回答，在三种字符编码表CEF上：UTF-8, UTF-16, UTF-32，定义了7种字符编码方案
+ * UTF-8
+ * UTF-16LE
+ * UTF-16BE
+ * UTF-16
+ * UTF-32LE
+ * UTF-32BE
+ * UTF-32</p>
 
 <p>Python读入的中文字符“好”，是“好”的UTF-8的字符序列
 即‘\xe5\xa5\xbd’
 S = ‘好’  //拿到字符序列
-S.decode(‘utf-8’)  //对字符序列进行utf-8解码，得到对应的unicode码</p>
-
-<pre><code>蛤
-</code></pre>
-
-<p>GB2312/GBK/GB18030  &mdash;-无编码
+S.decode(‘utf-8’)  //对字符序列进行utf-8解码，得到对应的unicode码
+蛤
+GB2312/GBK/GB18030  &mdash;-无编码
 Unicode 000086E4
 UTF8    E89BA4
 UTF16   FEFF86E4
@@ -144,43 +318,121 @@ GB18030：将code point映射为1,2,4个码元</p>
 
 <p>UTF-16编码示例</p>
 
-<p>字符编码方案（Character Encoding Scheme, CES），也称序列格式化（Serialization Format）：将码元映射为字节序列以便于字节序列存储的文件系统或者字节序列的网络传输。简单的CES包括UTF-8，UTF-16BE，UTF-16LE，UTF-32BE，UTF-32LE</p>
+<p>字符编码方案（Character Encoding Scheme, CES），也称序列格式化（Serialization Format）：将码元映射为字节序列以便于字节序列存储的文件系统或者字节序列的网络传输。简单的CES包括UTF-8，UTF-16BE，UTF-16LE，UTF-32BE，UTF-32LE <code>Git push origin master</code></p>
 
-<p><code>Git push origin master</code></p>
-</div></article>
-					
-						<div class="share">
-	<div class="addthis_toolbox addthis_default_style ">
-	
-	
-	
-	
-	</div>
-	
+<pre><code>print 'hello word'
+</code></pre>
+
+<p>精英主义是一种精神疾病，是一种心理变态。得了这种病的人，有不同的轻重程度。程度轻的人，也许只是张口闭口的“名校”和“牛人”。而程度重的人，最后可能成为反人类的战争罪犯。希特勒就是一个严重的精英主义者，他认为自己是精英，“劣等民族”的人都应该死。</p>
+
+<p>这些所谓的精英，在智力上，体力上，学识上，人格上，都没有什么值得称道的地方。他们被称为“精英”，往往是通过家族关系，或者舔人屁股，玩弄权术。还有些人，尽其所能包装自己，把自己跟名人或者富豪挂钩，写回忆录，请人给自己写传记，这样别人就以为他是天才，是杰出人物。而他们其实并没有什么特别，也许还不如一般人。</p>
+
+<p>精英们最在行的事情，其实是拉关系，互相吹捧，唱高调，包装自己。他们在心理上是弱小的，他们必须依赖于名校或者大公司的牌子，依赖于校友的认可，依赖于那些身居高位的人的赞许和提拔。他们很多人不过是某些幕后黑手的木偶人而已。有句话说得好：宠为下，得知若惊，失之若惊。如果你需要身居高位的人的认可，那么你其实是一个卑贱的人。</p>
+
+<p>精英主义者集结的地方，被中国人叫做“世界一流大学”：哈佛，耶鲁，Cornell…… 进入这些大学的人，一般都是通过关系或者金钱，却吹捧自己是因为才能出众而进入那些学校。等你亲自进去一看，发现里面的教授很少有真知灼见，上课照本宣科，学生忙着抄笔记，学得一知半解，作业互相抄袭，考试焦头烂额，蒙混过关。</p>
+
+<p>这些教授倒是对宣传工作相当在行，屁大点研究，总要让纽约时报之类的搞一下政治宣传，然后在院系主页上贴个告示，看哪我们教授的研究被纽约时报报道了！这些人的实际水平，比起很多州立大学里潜心做研究的不知名学者，差不止一个档次。很多中国人都不知道，纽约时报，华盛顿邮报，CNN 之类，其实都是婊子媒体，出钱或者有关系就给你发文拍片。纽约时报的老板就是个毒贩子，黑帮老大。</p>
+
+<p>实际上，“世界一流大学”这个名词，你只能在中国听到。在美国没有人使用这种词汇，甚至像（prestigious）这种词都很少用。如果你进入普通的州立大学，会发现没有人在乎哈佛，耶鲁，Cornell 这些“常春藤联盟”。如果你老是提这些名字，会招致人的反感。因为这些大学的人都知道精英学校是什么东西，根本不屑于提到他们。</p>
+
+<p>精英大学不但以无能著称，它们比你现象的还要可怕许多。这些学校里面一般都存在一些“秘密组织”，比如 Cornell 的 Quill and Dagger。这些组织就是精英聚集的场所。为什么要是秘密的呢？因为他们会进行一些见不得人的犯罪活动，导致成员之间互相抓住把柄，从而形成共生死的团伙。甚至有些名校的整个学院，都被罪犯花重金包下来，成为培养他们接班人的摇篮。所以美国的名校，其实跟娼妓没什么两样，名气越是大的越是这样。</p>
+
+<p>很多进入白宫的精英，就是从这种名校秘密组织出来的，比如臭名昭著的克林顿国家安全顾问 Sandy Berger，就是 Quill and Dagger 的成员。在 911 恐怖袭击发生之后，Sandy Berger 进入国家档案馆，偷走关于克林顿与 911 之间关系的资料原版，并且销毁。这种销毁证据的做法，说明克林顿跟 <sup>9</sup>&frasl;<sub>11</sub> 肯定有扯不清的关系。</p>
+
+<p>从这个现象，你也许可以理解为什么很多精英大学容易出现学生自杀的事件。比如上次新闻报道说，一周之内有三个学生从 Cornell 校内同一座桥上跳下去自杀，结果后来派了警察在桥上日夜巡逻。三个学生几乎在同一时间想不通，在同一地点寻短见，这也未免太巧了点吧。如果你研究过历史就会知道，美国很多所谓的自杀案件其实都是谋杀，只是用自杀来掩盖真相。所以这些学生到底是自杀还是谋杀，谁都说不清楚。想要把孩子送去精英大学读书的人，真的应该考虑一下他们的安全了。</p>
+
+<p>在精英大学上过研究生的人，大可不必觉得我是在嘲笑你们。精英主义者心目中的所谓“校友”，一般只包括本科阶段的同僚。如果你跟我一样在“二流学校”本科毕业，进入精英学校读研究生或者博士生，他们不会把你当成校友。相反，他们会歧视你，觉得你是去那里打工的，甚至嘲笑你好像什么都不懂，怎么进来的。这是因为本科是塑造人格和价值观的主要阶段，如果你的本科生活是在其它学校度过的，那么你并不具有这种“精英品质”，就算你之后进去读完博士也不会改变这个观念。这就是为什么有些中国人在国内本科都快毕业了，却退学去美国精英大学再读一个本科，因为这些人很想要成为精英，进入“主流社会”。</p>
+
+<p>然而现在我们已经看清楚了，美国的主流社会和精英们的本质，我们知道了他们在干些什么样的事情。所以如果你不是精英大学官方意义上的校友，反倒没有了这层嫌疑需要洗清。</p>
+
+<p>美国精英们的“宣传部”，叫做好莱坞。好莱坞通过形象包装，形成偶像崇拜，好莱坞电影就是给人们洗脑的工具。好莱坞明星们给人们灌输错误的标准：审美标准，道德标准。说实话，好莱坞这么多女影星走红地毯，就找不出几个好看的。可是由于他们给人洗脑，以至于很多天生丽质的女生从小耳濡目染，居然觉得好莱坞那些丑女明星比自己美，去模仿她们的化妆和衣着样式，甚至想去做整形手术，这样可以变得更像她们。这些美丽的女孩因为明星崇拜，失去了对自己的尊重和自信，真是可惜。</p>
+
+<p>说到道德，你可能已经听说了，好莱坞的明星们几乎每一个都吸毒，很多还进行更可怕的犯罪活动。有一种极其变态的犯罪活动，叫做恋童癖（pedophilia），或者直接一点，叫做性虐儿童（child sex abuse）。我们都听说 Michael Jackson 被指控强奸男童的事，后来又莫名其妙死了，这表现出团伙成员之间的内斗现象。有趣的是，好莱坞有很多的明星最后都说是自杀或者吸毒过量死亡。他们到底是自杀还是谋杀，也很值得怀疑。</p>
+
+<p>恋童活动在好莱坞非常的普遍，它还经常跟邪教仪式（satanic ritual）结合在一起，这些人会在仪式上当场宰杀儿童用来“祭祀”。这种丧尽天良的可怕罪行，在很多其他国家是要判死刑的，美国政府却几乎完全不管，因为白宫的官员们在干同样的事情。这不是危言耸听，如果你仔细研究，就会发现这就是全世界的精英团伙里面正在进行的：美国白宫，英国王室，好莱坞，天主教会，世界一流大学……</p>
+
+<p>美国这几年每年有超过 40 万儿童失踪，每年车祸死亡的人数才 3 万多。失踪儿童数量比车祸死亡人数大十倍以上，这是不正常的。这些失踪的儿童到哪里去了？另外，美国有些儿童领养中心和孤儿院，被查出在从事贩卖儿童性奴（child sex trafficking）的生意。这些人还在落后和受灾国家办孤儿院，说是人道主义援助，结果被当地警察发现他们带走的小孩都是有父母的…… 你不觉得毛骨悚然吗？</p>
+
+<p>反正看到这一切的时候，我的世界观都被颠覆了。我真希望这只是一场还没醒来的噩梦，可是无数的证据和证人都说明这就是现实！</p>
+
+<p>精英们一直以来都依靠媒体来掩盖自己罪恶的真相，给人洗脑，冠冕堂皇的让人崇拜。而这次的美国总统大选，导致了这些主流媒体的轰然倒塌：CNN，华盛顿邮报，纽约时报，时代周刊，BBC，…… 我们现在知道，这些媒体都是被庞大的恶势力网络控制的。</p>
+
+<p>在互联网发达之后，精英们也利用网络媒体来对公众进行洗脑。他们的帮凶包括 Google，Facebook，Twitter，…… 这些社交媒体不但在政治上帮助这些精英搞宣传，而且帮助他们屏蔽对他们不利的真相，把这些真相都叫做“假新闻”。而事实是，CNN 之类的主流媒体才是假新闻。如果你仔细研究一下，会发现 Facebook 和华盛顿邮报的幕后支持者，其实是作恶多端的 CIA。</p>
+
+<p>真正独立而自由的“另类媒体”，比如 InfoWars，Breitbart，Prison Planet，再加上异常强大的 WikiLeaks，通过多方面的证据，揭示了精英们的真相。是这些敢于说真话的人，用他们的生命和自由，换来了世界局势的转机，同时导致了精英主义走向灭亡。现在听说某人是“精英”，我都得先考虑一下他跟这些龌龊的事情有没有关系，上网搜索调查一下。</p>
+
+<p>未来的世界属于每一个平凡的人，只是他们还在熟睡，旁边的吸血鬼们正在黑暗中选择他们的猎物…… 当真相的阳光照进来，当人们醒过来的时候，就是精英统治的时代结束的时候。如果你现在还以为有任何人高人一等，你的心里还存在某种偶像，你还以为世界上有天才存在，你还很在乎好莱坞明星，或者 Zuckerberg 之类小丑说的话或者做的事，你还在梦想有一天把孩子送到哈佛念书，进入“上流社会”，请仔细再看看这篇文章和相关的视频，你会意识到这些想法有多么的愚蠢。</p>
+
+<p>你完全没有意识到自己的价值，你没有意识到身边的普通人的价值，你没有发现幸福就在身边。你只是生活在别人为你设计的梦里，追求那些他们让你追求的东西，最终却发现你出卖了灵魂。醒来的过程是痛苦的，但醒来后的未来是美好的。被精英们用欺骗手段收走的力量，就要回到人们的手里！</p>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://www.example.com/post/Chinese-word-segment/">中文分词技术</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://www.example.com/post/Chinese-word-segment/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
 </div>
 
-					
-					
-					
 
 
-				    </div>
-				</div>
-			</div>
-			<footer id="footer" class="inner">Copyright &copy; 2017
-
-    Python27 的博客
-
-Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>
-<script src="http://python27.github.io//js/slash.js"></script>
-<script src="http://python27.github.io//js/jquery.fancybox.pack.js"></script>
+  
+<div id="disqus_thread"></div>
 <script type="text/javascript">
-(function($){
-	$('.fancybox').fancybox();
-})(jQuery);
-</script></footer>
-		</div>
-	</div>
-	
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'Your Disqus shortname';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://www.example.com/js/ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'Your Google Analytics tracking ID', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
 </body>
 </html>
+

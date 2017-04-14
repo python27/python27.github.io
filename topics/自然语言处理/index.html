@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.19" />
 
-  <title>Python27 的博客</title>
+  <title>自然语言处理 &middot; Python27 的博客</title>
 
   
   
@@ -37,7 +37,7 @@
 
   
   
-  <link rel="alternate" type="application/rss+xml" title="Python27 的博客" href="https://www.example.com/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Python27 的博客" href="https://www.example.com/topics/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/index.xml" />
   
 
   
@@ -107,7 +107,7 @@
 
     
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://www.example.com/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      <a class="pure-menu-link" href="https://www.example.com/topics/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
     </li>
     
 
@@ -212,8 +212,7 @@
 
 
 <div class="header">
-  <h1>Python27 的博客</h1>
-  <h2>Thoughts of Algorithm</h2>
+  <h1>自然语言处理</h1>
 </div>
 
 <div class="content">
@@ -278,48 +277,6 @@ def ForwardMaximumMatch(sentence, word_dict, max_word_length): &quot;&quot;&quot
 </article>
 
   
-    <article>
-  <header>
-    <h2><a href="https://www.example.com/post/talk-about-encoding-problems/">聊一聊Python的编码问题</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>02 Apr 2017, 16:11</time>
-  </div>
-
-  
-
-  
-
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Unicode 编码模型（Unicode Encoding Model）  哪些可用字符 这些字符对应的自然数（码位，Code Points） 这些自然数如何编码为固定尺寸的自然数（码元，Code Unit） 这些码元如何被编码为字节流  抽象字符集（Abstract Character Repertoire，ACR）：所有待编码字符的集合。
-编码字符集（Coded Character Set, CCS）：将抽象字符映射为自然数（码位，Code Point）的函数。
-字符编码表（Character Encoding Form, CEF），也称为存储格式化（Storage Format）：将码位（Code Point）映射为码元（Code Unit），以便于计算机存储。例如：16位计算机系统只能够直接表示0~65535的码元，但是对于更大的码元（65536~140万）可以通过多个16bit的单元表示，这种对应就是CEF定义的。
- US-ASCII的code unit是7bits UTF-8，EBCDIC和GB18030的code unit是8bits UTF-16的code unit是16bits UTF-32的code unit是32bits  UTF8： 将code point映射为1,2,3,4个码元 UTF16：将code point映射为1个码元对于U+10000；映射为2个码元对于&gt;U+10000 UTF-32: 将code point直接映射为1个码元 GB18030：将code point映射为1,2,4个码元
-编码方案 说明好 GB2312 1980年，6763个汉字 BAC3 GBK 1995年，21003个汉字 BAC3 GB18030 2000年，27533个汉字 BAC3 Unicode 0000597D UTF-8 E5A5BD UTF-16 FEFF597D UTF-32 0000FEFF0000597D
-*抽象字符表（Abstract character Repertoire, ACR）*：所有待编码字符的集合。例如：haha_acr = { &lsquo;a&rsquo;, &lsquo;吼&rsquo;, &lsquo;あ&rsquo;, &lsquo; α&rsquo;, &lsquo;Д&rsquo; }
-  </p>
-
-  
-  <footer>
-    <a href="https://www.example.com/post/talk-about-encoding-problems/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-
-  
-
-
 </div>
 
 </div>
@@ -342,4 +299,3 @@ def ForwardMaximumMatch(sentence, word_dict, max_word_length): &quot;&quot;&quot
 
 </body>
 </html>
-

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.19" />
+
+  <title>中文分词技术 &middot; Python27 的博客</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://www.example.com/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://www.example.com/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://www.example.com/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://www.example.com/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://www.example.com/css/my.css">
+  
+  
+    <script src="https://www.example.com/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://www.example.com/">Python27</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.example.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.example.com/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.example.com/contact/"><i class='fa fa-phone fa-fw'></i>Contact</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.example.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/2839959630" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/python27" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://stackoverflow.com/users/*" target="_blank"><i class="fa fa-stack-overflow fa-fw"></i>Stack Overflow</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2017. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>中文分词技术</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>14 Apr 2017, 16:21</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://www.example.com/topics/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86">自然语言处理</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://www.example.com/tags/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D">中文分词</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  
+
+<h1 id="1-中文分词介绍">1. 中文分词介绍</h1>
+
+<p>不像英文句子中单词与单词之间以空格分隔，中文语句的词与词之间没有明显的分隔符号。然而词语又是中文语句分析和理解的最基本单元，因此分词在中文自然语言处理中首当其冲，分词的好坏直接关系到后续的理解和分析。中文分词问题可以描述为，将由连续汉字组成的句子，添加合适的词语边界使得其反应句子的本意。例如：将“南京市长江大桥”添加词语边界“/”得到“南京/市/长江大桥”。更一般地，假设句子S=C1C2C3…Cn，其中C1, C2, …Cn表示单个汉字，分词算法需要将其切分为C1C2/C3C4C5/…/Cn其中C1C2和C3C4C5分别为一个词语。中文分词存在的主要困难有 [1]：</p>
+
+<ul>
+<li><p>未登录词：词典不可能覆盖所有的词，没有被词典收录的词就称为<strong>未登录词</strong>或者<strong>新词</strong>。其主要包括专有名词（人名、地名、机构名等）、重叠词（例如：“高高兴兴”）、派生词（例如：“一次性/用品”）等。</p></li>
+
+<li><p>分词歧义：例如“乒乓球拍卖完了”可以切分为“乒乓/球拍/卖完了”，也可以切分为“乒乓球/拍卖/完了”。学术上定义，如果汉字串AJB满足AJ和JB同时为词，则称AJB为<strong>交集型切分歧义</strong>，其中J被称为交集串。除此之外，对于词语“起身”，在语境“他站/起/身/来”应该切分开；而在语境“他/明天/起身/去/北京”则不应该被切分开。学术上定义：如果汉字串AB满足A，B，AB同时为词，则称AB为<strong>组合型切分歧义</strong>。</p></li>
+</ul>
+
+<h1 id="2-基于匹配的分词算法">2. 基于匹配的分词算法</h1>
+
+<p>基于匹配的分词算法，也被称为基于词典的分词算法，或者简单地称作是“查词典”。顾名思义，其基本的想法就是不断找出句子中的字符串，然后去字典查找该字符串是否在字典内：如果在字典内则匹配成功，切出该词；否则，减小字符串长度，继续查找，直到是单个汉字为止。</p>
+
+<p>根据对句子扫描方向的不同，基于匹配的算法可以分为前向匹配算法、后向匹配算法和双向匹配算法三种，下面分别进行介绍。</p>
+
+<h2 id="2-1-前向最大匹配算法">2.1 前向最大匹配算法</h2>
+
+<p><strong>前向最大匹配算法（Forward Maximum Match, FMM）</strong>的基本思想是，从左至右扫描语句中的子串，如果子串在字典中，则匹配成功，切出该词；否则减少子串的长度，继续查找，直到子串是单个汉字为止（单个汉字被认为总是在字典中）。该算法的具体步骤如下：
+1.  设字典中最长词的长度为MAX_L；当前匹配长度L = MAX_L；当前带切分语句等于整个语句，即S=Sentence；当前切分结果的集合Res = {}；
+2.  取待切分语句S=C1C2C3…CL…Cn的前L个字符，在字典中查找C1C2C3…CL是否为合法词语，如果找到，则匹配成功，转入4；
+3.  如果字典中找不到词语C1C2C3…CL，则匹配失败；将匹配串长度减去1，即L = L – 1，转入2继续匹配；重复2-3直到匹配到为止；
+4.  将匹配串C1C2C3…CL放入结果集Res中，即Res = Res + C1C2C3…CL；更新带切分句子S=C{L+1}C{L+2}…Cn；如果带切分句子S为空，则返回切分结果Res，算法结束；否则转入2。</p>
+
+<p>根据上述算法描述，其Python实现为：</p>
+
+<pre><code>def ForwardMaximumMatch(sentence, word_dict, max_word_length):
+&quot;&quot;&quot; 中文分词的最大前向匹配算法
+&quot;&quot;&quot;
+s = sentence
+segment_result = []
+
+while s:
+    # 当前句子非空，按照最大长度切出一个词
+    match_len = max_word_length
+    match_len = min(match_len, len(s))
+
+    while True:
+        # 按照当前长度切出一个词
+        word = s[0:match_len]
+        # 如果当前切出的词在字典中，注意：单个汉字被认为总是在字典中
+        # 则切走当前词，并更新s，进行下一轮的切分
+        if len(word) == 1 or word in word_dict:
+            word = s[0:match_len]
+            segment_result.append(word)
+            s = s[match_len:]
+            break
+        # 否则，如果当前切出的词不在字典中，则减小切分长度，重新尝试切分
+        else:
+            match_len = match_len - 1
+
+return segment_result
+</code></pre>
+
+<p>为了测试算法的效果，笔者以<a href="http://www.sogou.com/labs/resource/w.php">搜狗实验室的互联网词库（SogouW）</a>作为词典 ，并设最大词长为6，对朱自清的《背影》进行了中文分词，其结果如下：</p>
+
+<blockquote>
+<p>我与/父亲/不/相见/已/二年/余/了/，/我/最不/能/忘记/的是/他的背影/。/那年/冬天/，/祖母/死了/，/父亲/的/差使/也/交/卸/了/，/正是/祸不单行/的/日子/，/我/从/北京/到/徐州/，/打算/跟着/父亲/奔丧/回家/。/到/徐州/见着/父亲/，/看见/满/院/狼藉/的/东西/，/又/想起/祖母/，/不禁/簌簌/地/流下/眼泪/。/父亲/说/，/“/事已/如此/，/不必/难过/，/好在/天/无/绝/人/之路/！/”
+回家/变卖/典/质/，/父亲/还了/亏空/；/又/借钱/办了/丧事/。/这些日子/，/家中/光景/很/是/惨淡/，/一半/为了/丧事/，/一半/为了/父亲/赋闲/。/丧事/完毕/，/父亲/要到/南京/谋事/，/我也要/回/北京/念书/，/我们/便/同行/。
+到/南京/时/，/有/朋友/约/去/游逛/，/勾留/了/一日/；/第二日/上午/便/须/渡江/到/浦/口/，/下午/上车/北去/。/父亲/因为/事/忙/，/本已/说/定/不送/我/，/叫/旅馆里/一个/熟识/的/茶房/陪我/同去/。/他再/三/嘱咐/茶房/，/甚/是/仔细/。/但他/终于/不放心/，/怕/茶房/不妥/帖/；/颇/踌躇/了/一会/。/其实/我那/年/已/二十岁/，/北京/已/来往/过/两三次/，/是/没有/甚么/要紧/的/了/。/他/踌躇/了/一会/，/终于/决定/还是/自己/送我/去/。/我/两三/回/劝他/不必/去/；/他只/说/，/“/不要紧/，/他们/去/不好/！/”
+我们/过了/江/，/进了/车站/。/我买/票/，/他/忙着/照看/行李/。/行李/太多了/，/得/向/脚夫/行/些/小费/，/才可/过去/。/他便/又/忙着/和他/们/讲价钱/。/我那/时/真是/聪明/过分/，/总/觉/他说/话/不大/漂亮/，/非/自己/插嘴/不可/。/但他/终于/讲/定了/价钱/；/就送/我上/车/。/他给/我/拣/定了/靠/车门/的/一张/椅子/；/我将/他给/我做/的/紫/毛/大衣/铺好/坐位/。/他/嘱/我/路上/小心/，/夜里/警醒/些/，/不要/受凉/。/又/嘱托/茶房/好好/照应/我/。/我心里/暗笑/他的/迂/；/他们/只认/得/钱/，/托/他们/直/是/白/托/！/而且/我这/样/大年/纪/的人/，/难道/还不能/料理/自己/么/？/唉/，/我现在/想想/，/那时/真是太/聪明/了/！
+我说道/，/“/爸爸/，/你走/吧/。/”/他/望/车外/看了看/，/说/，/“/我买/几个/橘子/去/。/你就/在此/地/，/不要走/动/。/”/我看/那边/月台/的/栅栏/外/有几个/卖东西/的/等着/顾客/。/走到/那边/月台/，/须/穿过/铁道/，/须/跳下去/又/爬上去/。/父亲/是一个/胖子/，/走过去/自然/要/费事/些/。/我本/来/要去/的/，/他不/肯/，/只好/让他/去/。/我看见/他戴着/黑/布/小/帽/，/穿着/黑/布/大马/褂/，/深/青/布/棉/袍/，/蹒跚/地走/到/铁道/边/，/慢慢/探身/下去/，/尚不/大/难/。/可是他/穿过/铁道/，/要/爬上/那边/月台/，/就不/容易/了/。/他用/两手/攀/着/上面/，/两脚/再向/上/缩/；/他/肥胖/的/身子/向左/微/倾/，/显出/努力/的/样子/。/这时/我看见/他的背影/，/我的/泪/很快/地/流下/来了/。/我赶紧/拭/干了/泪/，/怕他/看见/，/也/怕/别人/看见/。/我再/向外/看时/，/他已/抱了/朱红/的/橘子/望/回/走了/。/过/铁道/时/，/他先/将/橘子/散/放在/地上/，/自己/慢慢/爬下/，/再/抱起/橘子/走/。/到/这边/时/，/我赶紧/去/搀/他/。/他和/我走/到/车上/，/将/橘子/一股脑儿/放在/我的/皮大衣/上/。/于是/扑扑/衣/上/的/泥土/，/心里/很/轻松/似/的/，/过/一会/说/，/“/我走了/；/到/那边/来信/！/”/我/望着他/走出去/。/他走/了/几步/，/回过/头/看见/我/，/说/，/“/进去/吧/，/里边/没人/。/”/等他/的/背影/混入/来来往往/的人/里/，/再找/不着/了/，/我便/进来/坐下/，/我的眼泪/又来了/。
+近几年来/，/父亲/和我/都是/东奔西走/，/家中/光景/是/一日/不如/一日/。/他/少年/出外/谋生/，/独力/支持/，/做/了/许多/大事/。/那知/老/境/却/如此/颓唐/！/他/触目伤怀/，/自然/情/不能自已/。/情/郁/于/中/，/自然/要/发/之于/外/；/家庭/琐屑/便往/往/触/他/之/怒/。/他/待我/渐渐/不同/往日/。/但/最近/两年/的/不见/，/他/终于/忘却/我的/不好/，/只是/惦记/着/我/，/惦记/着/我的/儿子/。/我/北/来/后/，/他写/了/一/信/给我/，/信中/说道/，/“/我/身体/平安/，/惟/膀子/疼痛/利害/，/举/箸/提笔/，/诸多/不便/，/大约/大/去/之/期/不远/矣/。/”/我读/到此/处/，/在/晶莹/的/泪光/中/，/又/看见/那/肥胖/的/，/青/布/棉/袍/，/黑/布/马褂/的/背影/。/唉/！/我不/知/何时/再/能与/他/相见/！</p>
+</blockquote>
+
+<p>可以看到，总体来说，如果词典选择得好，FMM算法还是能比较好的实现切分效果的。然而也存在一些问题，首先对于未登录词不友好，例如“/第二日/上午/便/须/渡江/到/浦/口”，其中“浦口”应该是一个词，然而FMM算法并未识别出来。其次，对于交集型歧义不友好，例如：“/总/觉/他说/话/不大/漂亮/”，其中“他说话”可以切分为“他说/话”或者“他/说话”，这里应该是后者，然而由于FMM从左至右扫描，导致切分成前者。</p>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://www.example.com/post/talk-about-encoding-problems/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://www.example.com/post/talk-about-encoding-problems/">聊一聊Python的编码问题</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'Your Disqus shortname';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://www.example.com/js/ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'Your Google Analytics tracking ID', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</body>
+</html>
+
