@@ -317,6 +317,40 @@ return segment_result
 
 <p>可以看到，总体来说，FMM 算法的分词效果还是可以的。然而也存在一些问题，首先对于未登录词不友好，例如“/第二日/上午/便/须/渡江/到/浦/口”，其中“浦口”应该是一个词，然而 FMM 算法并未识别出来。其次，对于交集型歧义不友好，例如：“/总/觉/他说/话/不大/漂亮/”，其中“他说话”可以切分为“他说/话”或者“他/说话”，这里应该是后者，然而由于 FMM 从左至右扫描，导致切分成前者。此外，由于 FMM 也是优先匹配长词，因此对于组合型歧义也不能很好的解决，例如：“他站起身来”将被切分为“他/站/起身/来”，而不是正确的“他/站/起/身/来”。由于以上缺点，FMM算法通常不单独使用，而是与其他算法配合使用。</p>
 
+<h2 id="2-2-后向最大匹配">2.2 后向最大匹配</h2>
+
+<p><strong>后向最大匹配算法（Backward Maximum Match, BMM）</strong>前向最大匹配 FMM 基本相同，唯一不同的是，后向最大匹配 BMM 按照从右至左的顺序扫描并切词。该算法的提出是因为人们发现，汉语通常将要描述的主体对象放置在句子后面。BMM 的分词效果通常比 FMM 要好，FMM 的错误切分率为 1 / 169，而 BMM 的错误切分率仅为 1 / 245 [1]。举个例子：“南京市长江大桥”，FMM 的输出为“南京/市长/江/大桥”，而 BMM 的输出为“南京/市/长江大桥”，后者的切分更加合理。BMM 的 Python 实现为：</p>
+
+<pre><code>def BackwardMaximumMatch(sentence, word_dict, max_word_length):
+&quot;&quot;&quot; 中文分词的最大后向匹配算法
+&quot;&quot;&quot;
+s = sentence
+segment_result = []
+
+while s:
+    match_len = max_word_length
+    match_len = min(match_len, len(s))
+
+    while True:
+        # 从右至左切出最大匹配词
+        word = s[-match_len:]
+        # 如果当前词在词典内，则切出最右边的词，并更新带切词句子s
+        if len(word) == 1 or word in word_dict:
+            segment_result.append(word)
+            s = s[0:-match_len]
+            break
+        # 否则，当前词不再词典内，则减少匹配长度，继续尝试切分
+        else:
+            match_len = match_len - 1
+
+# 由于是自右至左切词，需要对列表进行反转
+segment_result.reverse()
+
+return segment_result
+</code></pre>
+
+<h2 id="2-3-双向最大匹配">2.3 双向最大匹配</h2>
+
 
   
 <div class="prev-next-post pure-g">
