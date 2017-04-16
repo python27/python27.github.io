@@ -120,6 +120,82 @@ return segment_result
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;2-3-双向最大匹配&#34;&gt;2.3 双向最大匹配&lt;/h2&gt;
+
+&lt;p&gt;双向匹配（Bi-direction Matching，BM）算法就是对一个句子同时用 FMM 和 BMM 进行切分，然后加入一些人工规则消歧以期得到较好的分词效果。&lt;/p&gt;
+
+&lt;p&gt;Sun M.S. 和 Benjamin K.T.（1995）的研究表明，中文中 90.0％ 左右的句子，正向最大匹配法和逆向最大匹配法完全重合且正确，只有大概 9.0％ 的句子两种切分方法得到的结果不一样，但其中必有一个是正确的（歧义检测成功），只有不到 1.0％ 的句子，或者正向最大匹配法和逆向最大匹配法的切分虽重合却是错的，或者正向最大匹配法和逆向最大匹配法切分不同但两个都不对（歧义检测失败）。这正是双向匹配法在实用中文信息处理系统中得以广泛使用的原因所在。这里我们定义如下简单的规则：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;如果 FMM 和 BMM 切分结果相同，直接输出任意一个结果；&lt;/li&gt;
+&lt;li&gt;如果 FMM 和 BMM 的切分结果不同：
+
+&lt;ul&gt;
+&lt;li&gt;a) 如果非词典词个数不同，则选取非词典词个数少的切分结果；&lt;/li&gt;
+&lt;li&gt;b) 如果非词典词个数相同，选择单字词个数少的切分结果；&lt;/li&gt;
+&lt;li&gt;c) 如果单字词个数相同，选择总词数少的切分结果；&lt;/li&gt;
+&lt;li&gt;d) 以上都相同，返回 BMM 的切分结果。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Python 代码实现为&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def BiDirectionMatching(sentence, word_dict, max_word_length):
+    &amp;quot;&amp;quot;&amp;quot; 中文分词的双向匹配算法
+    &amp;quot;&amp;quot;&amp;quot;
+    FMM_res = ForwardMaximumMatch(sentence, word_dict, max_word_length)
+    BMM_res = BackwardMaximumMatch(sentence, word_dict, max_word_length)
+
+    FMM_in_dict = []
+    FMM_not_in_dict = []
+    FMM_single = []
+    for word in FMM_res:
+        if len(word) == 1:
+            FMM_single.append(word)
+        else:
+            if word in word_dict:
+                FMM_in_dict.append(word)
+            else:
+                FMM_not_in_dict.append(word)
+
+    BMM_in_dict = []
+    BMM_not_in_dict = []
+    BMM_single = []
+    for word in BMM_res:
+        if len(word) == 1:
+            BMM_single.append(word)
+        else:
+            if word in word_dict:
+                BMM_in_dict.append(word)
+            else:
+                BMM_not_in_dict.append(word)
+
+    same_res = True
+    if len(FMM_res) != len(BMM_res):
+        same_res = False
+    else:
+        for i in range(len(FMM_res)):
+            if FMM_res[i] != BMM_res[i]:
+                same_res = False
+                break
+    # 1. FMM 和 BMM 结果完全相同，返回任意一个
+    if same_res == True:
+        return FMM_res
+    # 2. 返回不在词典中词数少的那个结果
+    elif len(FMM_not_in_dict) != len(BMM_not_in_dict):
+        if len(FMM_not_in_dict) &amp;lt; len(BMM_not_in_dict):
+            return FMM_res
+        else:
+            return BMM_res
+    # 3. 返回单字词数少的结果 
+    elif len(FMM_single) != len(BMM_single):
+        if len(FMM_single) &amp;lt; len(BMM_single):
+            return FMM_res
+        else:
+            return BMM_res
+    # 4. 都相同，返回 BMM 的结果
+    else:
+        return BMM_res
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
